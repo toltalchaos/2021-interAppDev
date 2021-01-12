@@ -28,6 +28,11 @@ namespace ChinookSyatem.Entities
             set { _Name = string.IsNullOrEmpty(value) ? null : value;}
         }
 
+        //navigational property 
+        // parent to child relationship - connect to many
+        //album pbject datatype 
+        public virtual ICollection<Album> Albums { get; set; }
+
 
     }
 }

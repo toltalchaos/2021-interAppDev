@@ -33,5 +33,12 @@ namespace ChinookSyatem.Entities
             get { return _ReleaseLabel; }
             set { _ReleaseLabel = string.IsNullOrEmpty(value) ? null : value; }
         }
+
+        //[NOTMAPPED] ANNOTATIONS are allowed but do not exist in DB
+
+        //navigational properties - not real data
+        //object datatype 
+        //many to one/child to parent relationship
+        public virtual Artist Artist { get; set; }
     }
 }
