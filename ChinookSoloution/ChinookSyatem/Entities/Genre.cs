@@ -9,23 +9,26 @@ using System.ComponentModel.DataAnnotations;
 #endregion
 namespace ChinookSyatem.Entities
 {
-    [Table("MediaTypes")]
-    internal class MediaType
+    [Table("Genres")]
+    internal class Genre
     {
         private string _Name;
 
         [Key]
-        public int MediaTypeId { get; set; }
+        public int GenreId { get; set; }
+
+        [StringLength(120, ErrorMessage ="Maximum charactercount of 120 on genre name")]
         public string Name
         {
+
             //coded as fully implamented 
             get { return _Name; }
             set { _Name = string.IsNullOrEmpty(value) ? null : value; }
         }
 
-        //Navigational property
-        //child to parent - many tracks to THIS media
-        public virtual ICollection<Track> Tracks { get; set; }
 
+        //nav properties
+        //many tracks to THIS genre
+        public virtual ICollection<Track> Tracks { get; set; }
     }
 }
