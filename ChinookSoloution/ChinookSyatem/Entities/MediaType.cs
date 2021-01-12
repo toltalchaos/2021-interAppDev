@@ -9,7 +9,23 @@ using System.ComponentModel.DataAnnotations;
 #endregion
 namespace ChinookSyatem.Entities
 {
-    class MediaType
+    [Table("MediaTypes")]
+    internal class MediaType
     {
+        private string _Name;
+
+        [Key]
+        public int MediaTypeId { get; set; }
+        public string Name
+        {
+            //coded as fully implamented 
+            get { return _Name; }
+            set { _Name = string.IsNullOrEmpty(value) ? null : value; }
+        }
+
+        //Navigational property
+        //child to parent - many tracks to one media
+        public virtual ICollection<Track> Tracks { get; set; }
+
     }
 }
