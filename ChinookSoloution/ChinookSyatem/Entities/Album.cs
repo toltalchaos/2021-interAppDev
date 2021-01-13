@@ -40,5 +40,8 @@ namespace ChinookSyatem.Entities
         //object datatype 
         //many to one/child to parent relationship
         public virtual Artist Artist { get; set; }
+
+        //Many tracks belong on one album
+        public virtual ICollection<Track> Tracks { get; set; }
     }
 }

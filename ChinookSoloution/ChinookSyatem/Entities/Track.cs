@@ -12,6 +12,9 @@ namespace ChinookSyatem.Entities
     [Table("Tracks")]
     internal class Track
     {
+        private string _Composer;
+
+
         [Key]
         public int TrackId { get; set; }
 
@@ -23,7 +26,12 @@ namespace ChinookSyatem.Entities
         public int? GenreId { get; set; }
 
         [StringLength(220, ErrorMessage ="Composer has a Maximum of 220 characters")]
-        public string Composer { get; set; }
+        public string Composer
+        {
+            //coded as fully implamented 
+            get { return _Composer; }
+            set { _Composer = string.IsNullOrEmpty(value) ? null : value; }
+        }
         public int Miliseconds { get; set; }
         public int? Bytes { get; set; }
         public double UnitPrice { get; set; }
