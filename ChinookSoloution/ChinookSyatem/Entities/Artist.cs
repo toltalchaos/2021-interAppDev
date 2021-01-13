@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 #endregion
-namespace ChinookSyatem.Entities
+namespace ChinookSystem.Entities
 {
     [Table("Artists")]
 

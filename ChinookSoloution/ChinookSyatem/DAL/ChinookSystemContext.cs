@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 #region additional namespaces
 using System.Data.Entity;
-using ChinookSyatem.Entities;
+using ChinookSystem.Entities;
 #endregion
-namespace ChinookSyatem.DAL
+namespace ChinookSystem.DAL
 {
     internal class ChinookSystemContext: DbContext //inheritance ties DB context
     {

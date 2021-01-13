@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApp", "WebApp\WebApp.csproj", "{71ECE610-89EB-4EB3-80B1-877BFDE5D311}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChinookSyatem", "ChinookSyatem\ChinookSyatem.csproj", "{ADAED8D0-7CE7-49AD-9EDC-AEACFFAAFABE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChinookSystem", "ChinookSyatem\ChinookSystem.csproj", "{ADAED8D0-7CE7-49AD-9EDC-AEACFFAAFABE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

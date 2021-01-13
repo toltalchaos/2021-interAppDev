@@ -8,8 +8,8 @@
     <ProjectGuid>{ADAED8D0-7CE7-49AD-9EDC-AEACFFAAFABE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ChinookSyatem</RootNamespace>
-    <AssemblyName>ChinookSyatem</AssemblyName>
+    <RootNamespace>ChinookSystem</RootNamespace>
+    <AssemblyName>ChinookSystem</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -62,7 +62,6 @@
     <Compile Include="Entities\Track.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\ArtistAlbums.cs" />
-    <Compile Include="ViewModels\dummy.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

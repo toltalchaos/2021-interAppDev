@@ -66,6 +66,10 @@
                                         href="~/SamplePages/TestPage.aspx"
                                         style="color:black" runat="server">
                                    this is the Test Page</a>
+                                <a class="dropdown-item"
+                                        href="~/SamplePages/ArtistAlbums.aspx"
+                                        style="color:black" runat="server">
+                                   Artist Albums List (ODS)</a>
                             </div>
                          </li>
                          <li class="nav-item">

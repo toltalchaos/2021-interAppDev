@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 #region additional namespaces
-using ChinookSyatem.DAL;
-using ChinookSyatem.Entities; //for SQL and are internal
-using ChinookSyatem.ViewModels; //for dataclasses to transfer data from BLL to webapp
+using ChinookSystem.DAL;
+using ChinookSystem.Entities; //for SQL and are internal
+using ChinookSystem.ViewModels; //for dataclasses to transfer data from BLL to webapp
 using System.ComponentModel; //for ODS Wizard
 #endregion
-namespace ChinookSyatem.BLL
+namespace ChinookSystem.BLL
 {
     [DataObject]
     public class AlbumController
