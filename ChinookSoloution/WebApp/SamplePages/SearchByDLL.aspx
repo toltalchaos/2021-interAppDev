@@ -17,5 +17,52 @@
 
         </div>
     </div>
+      <div class="row">
+        <div class="offset-3 ">
+            <asp:Label ID="Message" runat="server"></asp:Label>
+        </div>
+    </div>
+          <div class="row">
+        <div class="offset-3 ">
+            <asp:GridView ID="ArtistAlbumList" runat="server" AutoGenerateColumns="False" 
+                CssClass="table table-striped" GridLines="Horizontal" BorderStyle="None">
 
+                <Columns>
+                    <asp:TemplateField HeaderText="Album">
+                        <ItemTemplate>
+                            <asp:Label ID="Label2" runat="server" Text='<%# Eval("Title") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+
+                    <asp:TemplateField HeaderText="Released">
+                        <ItemTemplate>
+                            <asp:Label ID="Label3" runat="server" Text='<%# Eval("ReleaseYear") %>'></asp:Label>
+                        </ItemTemplate>
+                        <ItemStyle HorizontalAlign="Center"></ItemStyle>
+                    </asp:TemplateField>
+
+                    <asp:TemplateField HeaderText="Artist">
+                        <ItemTemplate>
+                            <asp:DropDownList ID="ArtistNameListDDL" runat="server" 
+                                DataSourceID="ArtistAlbumListODS" 
+                                DataTextField="DisplayField" 
+                                DataValueField="ValueField"
+                                selectedValue='<%# Eval("ArtistId") %>'>
+
+                            </asp:DropDownList>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                </Columns>
+                <EmptyDataTemplate>
+                    No albums found
+                </EmptyDataTemplate>
+
+            </asp:GridView>
+
+            <asp:ObjectDataSource ID="ArtistAlbumListODS" runat="server"
+                OldValuesParameterFormatString="original_{0}"
+                SelectMethod="Artist_DDLList"
+                TypeName="ChinookSystem.BLL.ArtistController"></asp:ObjectDataSource>
+        </div>
+    </div>
 </asp:Content>

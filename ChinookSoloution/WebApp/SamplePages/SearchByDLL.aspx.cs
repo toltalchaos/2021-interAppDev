@@ -46,7 +46,25 @@ namespace WebApp.SamplePages
 
         protected void SearchAlbumsBTN_Click(object sender, EventArgs e)
         {
+            if(ArtistList.SelectedIndex == 0)
+            {
+                //index 0 physiclaly points to the prompt line
+                Message.Text = "select an artist";
+                ArtistAlbumList.DataSource = null;
+                ArtistAlbumList.DataBind();
 
+            }
+            else
+            {
+                //bind to grid
+                AlbumController sysmgr = new AlbumController(); //new instance
+                //make a controller request to list object to use fot populating the Gridview
+                List<ChinookSystem.ViewModels.ArtistAlbums> info = sysmgr.Albums_GetAlbumsForArtist(int.Parse(ArtistList.SelectedValue)); //fully qualify name to avoid descrepancies 
+
+                //bind list object to grid 
+                ArtistAlbumList.DataSource = info;
+                ArtistAlbumList.DataBind();
+            }
         }
     }
 }
