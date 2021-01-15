@@ -11,6 +11,7 @@ namespace ChinookSystem.DAL
 {
     internal class ChinookSystemContext: DbContext //inheritance ties DB context
     {
+        //context connects to the entity as database onject images
         public ChinookSystemContext() : base("name=ChinookDB")
         {
 

@@ -14,12 +14,14 @@ namespace ChinookSystem.BLL
     [DataObject]
     public class AlbumController
     {
+        //controllers interact with the model and context linked to the database
+        //call ODS to this method creating a new model from the Database
         [DataObjectMethod(DataObjectMethodType.Select, false)]
         public List<ArtistAlbums> Albums_GetArtistAlbums()
         {
             using(var context = new ChinookSystemContext())
             {
-                //select all albums and create new instance of viewmodel
+                //select all albums and create new instance of viewmodel from the database 
                 IEnumerable<ArtistAlbums> results = from x in context.Albums
                                                     select new ArtistAlbums
                                                     {
