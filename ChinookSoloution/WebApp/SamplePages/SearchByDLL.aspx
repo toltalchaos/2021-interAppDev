@@ -1,4 +1,7 @@
 ﻿<%@ Page Title="Search by DLL" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="SearchByDLL.aspx.cs" Inherits="WebApp.SamplePages.SearchByDLL" %>
+
+<%@ Register Src="~/UserControls/MessageUserControl.ascx" TagPrefix="uc1" TagName="MessageUserControl" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
     <h1>
@@ -19,7 +22,7 @@
     </div>
       <div class="row">
         <div class="offset-3 ">
-            <asp:Label ID="Message" runat="server"></asp:Label>
+            <uc1:MessageUserControl runat="server" ID="MessageUserControl" />
         </div>
     </div>
           <div class="row">

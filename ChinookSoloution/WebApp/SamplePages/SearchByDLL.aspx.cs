@@ -49,21 +49,33 @@ namespace WebApp.SamplePages
             if(ArtistList.SelectedIndex == 0)
             {
                 //index 0 physiclaly points to the prompt line
-                Message.Text = "select an artist";
+                // "select an artist";
+
+                //using MessageUserControl for your own message..
+                MessageUserControl.ShowInfo("Search Concern","select an artist");
+
+                
                 ArtistAlbumList.DataSource = null;
                 ArtistAlbumList.DataBind();
 
             }
-            else
+            else 
             {
-                //bind to grid
-                AlbumController sysmgr = new AlbumController(); //new instance
-                //make a controller request to list object to use fot populating the Gridview
-                List<ChinookSystem.ViewModels.ArtistAlbums> info = sysmgr.Albums_GetAlbumsForArtist(int.Parse(ArtistList.SelectedValue)); //fully qualify name to avoid descrepancies 
+                //normally when leaving web page to class library you will want try-catch error handling
+                //use MessageUserControll to handle errors 
+                //  MessageUserControll has try-catch embedded inside its logic
+                MessageUserControl.TryRun(() => {
+                    //bind to grid
+                    AlbumController sysmgr = new AlbumController(); //new instance
+                                                                    //make a controller request to list object to use fot populating the Gridview
+                    List<ChinookSystem.ViewModels.ArtistAlbums> info = sysmgr.Albums_GetAlbumsForArtist(int.Parse(ArtistList.SelectedValue)); //fully qualify name to avoid descrepancies 
 
-                //bind list object to grid 
-                ArtistAlbumList.DataSource = info;
-                ArtistAlbumList.DataBind();
+                    //bind list object to grid 
+                    ArtistAlbumList.DataSource = info;
+                    ArtistAlbumList.DataBind();
+                }, "success message title", "success message goes here");
+
+
             }
         }
     }
