@@ -1,48 +1,52 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-#region additional-libraries
-using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-#endregion
 namespace ChinookSystem.Entities
 {
-    [Table("Tracks")]
-    internal class Track
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
+
+    internal partial class Track
     {
-        private string _Composer;
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Track()
+        {
+            InvoiceLines = new HashSet<InvoiceLine>();
+            PlaylistTracks = new HashSet<PlaylistTrack>();
+        }
 
-
-        [Key]
         public int TrackId { get; set; }
 
-        [Required(ErrorMessage ="Name is required")]
-        [StringLength(200, ErrorMessage ="Name is limited to a max of 200 chaters")]
+        [Required]
+        [StringLength(200)]
         public string Name { get; set; }
+
         public int? AlbumId { get; set; }
+
         public int MediaTypeId { get; set; }
+
         public int? GenreId { get; set; }
 
-        [StringLength(220, ErrorMessage ="Composer has a Maximum of 220 characters")]
-        public string Composer
-        {
-            //coded as fully implamented 
-            get { return _Composer; }
-            set { _Composer = string.IsNullOrEmpty(value) ? null : value; }
-        }
-        public int Miliseconds { get; set; }
-        public int? Bytes { get; set; }
-        public double UnitPrice { get; set; }
+        [StringLength(220)]
+        public string Composer { get; set; }
 
-        //Navigational Properties
-        //one property to THIS track
-        //album
+        public int Milliseconds { get; set; }
+
+        public int? Bytes { get; set; }
+
+        [Column(TypeName = "numeric")]
+        public decimal UnitPrice { get; set; }
+
         public virtual Album Album { get; set; }
-        //mediatype
-        public virtual MediaType MediaType { get; set; }
-        //genre
+
         public virtual Genre Genre { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<InvoiceLine> InvoiceLines { get; set; }
+
+        public virtual MediaType MediaType { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PlaylistTrack> PlaylistTracks { get; set; }
     }
 }

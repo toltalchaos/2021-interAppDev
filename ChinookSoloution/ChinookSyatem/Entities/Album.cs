@@ -1,47 +1,41 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-#region additional-libraries
-using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-#endregion
 namespace ChinookSystem.Entities
 {
-    [Table("Albums")]
-    internal class Album
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
+
+    internal partial class Album
     {
         private string _ReleaseLabel;
-        [Key]
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Album()
+        {
+            Tracks = new HashSet<Track>();
+        }
+
         public int AlbumId { get; set; }
 
-        [Required(ErrorMessage = "Album Title is a required field")]
-        [StringLength(160, ErrorMessage ="album title is limited to 160 characters")]
+        [Required(ErrorMessage ="Album Title is Required")]
+        [StringLength(160,MinimumLength = 1, ErrorMessage = "max character count of 160")]
         public string Title { get; set; }
 
-        
-        //FK annotation not needed if same name
-        public int ArtistId { get; set; } //not int? which = not nullable
+        public int ArtistId { get; set; }
 
         public int ReleaseYear { get; set; }
 
-        [StringLength(50, ErrorMessage = "_ReleaseLabel length is 50 charater maximum")]
+        [StringLength(50, ErrorMessage = "max character length is 50 album release label")]
         public string ReleaseLabel
         {
-            //coded as fully implamented 
             get { return _ReleaseLabel; }
             set { _ReleaseLabel = string.IsNullOrEmpty(value) ? null : value; }
         }
 
-        //[NOTMAPPED] ANNOTATIONS are allowed but do not exist in DB
-
-        //navigational properties - not real data
-        //object datatype 
-        //many to one/child to parent relationship
         public virtual Artist Artist { get; set; }
 
-        //Many tracks belong on one album
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Track> Tracks { get; set; }
     }
 }
