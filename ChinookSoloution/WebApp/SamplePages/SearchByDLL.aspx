@@ -65,7 +65,8 @@
             <asp:ObjectDataSource ID="ArtistAlbumListODS" runat="server"
                 OldValuesParameterFormatString="original_{0}"
                 SelectMethod="Artist_DDLList"
-                TypeName="ChinookSystem.BLL.ArtistController"></asp:ObjectDataSource>
+                TypeName="ChinookSystem.BLL.ArtistController"
+                OnSelected="SelectCheckForException"></asp:ObjectDataSource>
         </div>
     </div>
 </asp:Content>
