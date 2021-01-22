@@ -1,4 +1,7 @@
 ﻿<%@ Page Title="ListView ODS" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ListViewODSCRUD.aspx.cs" Inherits="WebApp.SamplePages.ListViewODSCRUD" %>
+
+<%@ Register Src="~/UserControls/MessageUserControl.ascx" TagPrefix="uc1" TagName="MessageUserControl" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <h1>ListView ODS CRUD</h1>
 
@@ -13,6 +16,17 @@
             </blockquote>
         </div>
     </div>
+
+    <div class="row">
+        <div class="offset-2">
+            <%-- validation - tie groups together --%>
+            <uc1:MessageUserControl runat="server" ID="MessageUserControl" />
+            <asp:ValidationSummary ID="ValidationSummary1" runat="server"  HeaderText="E group" ValidationGroup="E"/>
+            <asp:ValidationSummary ID="ValidationSummary2" runat="server" HeaderText="I group" ValidationGroup="I"/>
+
+        </div>
+    </div>
+
     <div class="row">
         <%-- REMEMBER TO ADD THE ATTRIBUTE "DATAKEYNAMES" TO GET THE DELETE FUNCTION OF THE LIST VIEW CRUD 
             
@@ -47,15 +61,23 @@
                 </tr>
             </AlternatingItemTemplate>
             <EditItemTemplate>
+                <%-- validation needed on edit and update associated templates,
+                            the ID of the validated control needs to be UNIQUE 
+                            the validation controls for a particular template needs to be GROUPED *****
+                    
+                        The validation Exicutes ONLY on the use of the template where the group is tied to the button--%>
+                <asp:RequiredFieldValidator ID="RequiredTitleE" runat="server" ErrorMessage="Title is Required when editing" ControlToValidate="TitleTextBoxE" Display ="none" 
+                     ValidationGroup ="E"></asp:RequiredFieldValidator>
                 <tr style="background-color: #999999;">
                     <td>
-                        <asp:Button runat="server" CommandName="Update" Text="Update" ID="UpdateButton" />
+                        <%-- tied button to validation group with validation group --%>
+                        <asp:Button runat="server" CommandName="Update" Text="Update" ID="UpdateButton"  ValidationGroup="E"/>
                         <asp:Button runat="server" CommandName="Cancel" Text="Cancel" ID="CancelButton" />
                     </td>
                     <td>
                         <asp:TextBox Enabled="False" Text='<%# Bind("AlbumId") %>' runat="server" ID="AlbumIdTextBox" width="50px"/></td>
                     <td>
-                        <asp:TextBox Text='<%# Bind("Title") %>' runat="server" ID="TitleTextBox" /></td>
+                        <asp:TextBox Text='<%# Bind("Title") %>' runat="server" ID="TitleTextBoxE" /></td>
                     <td>
 <%--                        <asp:TextBox Text='<%# Bind("ArtistId") %>' runat="server" ID="ArtistIdTextBox" /></td>--%>
                      <asp:DropDownList ID="ArtistNameList" runat="server" DataSourceID="ArtistNameListODS" 
@@ -77,15 +99,17 @@
                 </table>
             </EmptyDataTemplate>
             <InsertItemTemplate>
+                          <asp:RequiredFieldValidator ID="RequiredTitleI" runat="server" ErrorMessage="Title is Required when inserting" ControlToValidate="TitleTextBoxI" Display ="none" 
+                     ValidationGroup ="I"></asp:RequiredFieldValidator>
                 <tr style="">
                     <td>
-                        <asp:Button runat="server" CommandName="Insert" Text="Insert" ID="InsertButton" />
+                        <asp:Button runat="server" CommandName="Insert" Text="Insert" ID="InsertButton"  ValidationGroup="I"/>
                         <asp:Button runat="server" CommandName="Cancel" Text="Clear" ID="CancelButton" />
                     </td>
                     <td>
                         <asp:TextBox Enabled="False" Text='<%# Bind("AlbumId") %>' runat="server" ID="AlbumIdTextBox" width="50px"/></td>
                     <td>
-                        <asp:TextBox Text='<%# Bind("Title") %>' runat="server" ID="TitleTextBox" /></td>
+                        <asp:TextBox Text='<%# Bind("Title") %>' runat="server" ID="TitleTextBoxI" /></td>
                     <td>
 <%--                        <asp:TextBox Text='<%# Bind("ArtistId") %>' runat="server" ID="ArtistIdTextBox" /></td>--%>
                      <asp:DropDownList ID="ArtistNameList" runat="server" DataSourceID="ArtistNameListODS" 
@@ -185,12 +209,17 @@
             SelectMethod="Albums_List" 
             TypeName="ChinookSystem.BLL.AlbumController" 
             DataObjectTypeName="ChinookSystem.ViewModels.AlbumItem" 
-            DeleteMethod="Album_Delete" InsertMethod="Album_Add" UpdateMethod="Album_Update"></asp:ObjectDataSource>
+            DeleteMethod="Album_Delete" InsertMethod="Album_Add" UpdateMethod="Album_Update"
+             OnDeleted="DeleteCheckForException"
+             OnInserted="InsertCheckForException"
+             OnSelected="SelectCheckForException"
+             OnUpdated="UpdateCheckForException"></asp:ObjectDataSource>
 
         <asp:ObjectDataSource ID="ArtistNameListODS" runat="server" 
             OldValuesParameterFormatString="original_{0}" 
             SelectMethod="Artist_DDLList" 
-            TypeName="ChinookSystem.BLL.ArtistController"></asp:ObjectDataSource>
+            TypeName="ChinookSystem.BLL.ArtistController"
+             OnSelected="SelectCheckForException"></asp:ObjectDataSource>
 
     </div>
 </asp:Content>
