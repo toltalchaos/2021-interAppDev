@@ -43,7 +43,7 @@
 
 
             <asp:ObjectDataSource ID="goofyGrapeODS" runat="server" OldValuesParameterFormatString="original_{0}"
-                SelectMethod="Employee_EmployeeCustomerList"  
+                SelectMethod="Employee_EmployeeCustomerList"   OnSelected="SelectCheckForException"
                 TypeName="ChinookSystem.BLL.EmployeeController"></asp:ObjectDataSource>
         </div>
 
