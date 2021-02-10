@@ -82,7 +82,12 @@ namespace ChinookSystem.BLL
         {
             using (var context = new ChinookSystemContext())
             {
-                
+                //in 1517 when entity was public we stored to the entity 
+                //using entiry framework .Find() and return context.DBsetName.find()...
+                // now we must use a ViewModel 
+
+                // .FirstOrDefault() / .First() - returns the first object, OR return a NULL value
+
                 AlbumItem results = (from x in context.Albums
                               where x.AlbumId == albumid
                                                  select new AlbumItem
@@ -94,7 +99,7 @@ namespace ChinookSystem.BLL
                                                      ReleaseLabel = x.ReleaseLabel
                                                  }).FirstOrDefault();
                 //FirstOrDefault will return either A-the first record or B-a null value
-                return results;
+                return results;//not .ToList() because of FirstOrDefault()
             }
         }
 
