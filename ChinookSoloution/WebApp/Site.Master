@@ -88,6 +88,11 @@
                                         style="color:black" runat="server">
                                    ods repeater
                                  </a>
+                                <a class="dropdown-item"
+                                        href="~/SamplePages/ManagePlaylist.aspx"
+                                        style="color:black" runat="server">
+                                   Manage Playlist
+                                 </a>
                             </div>
                          </li>
                          <li class="nav-item">
