@@ -47,12 +47,17 @@
     </div>
     <div class="col-sm-9">
         <asp:Label ID="Label5" runat="server" Text="Tracks"></asp:Label>&nbsp;&nbsp;
-        <asp:Label ID="TracksBy" runat="server" ></asp:Label>&nbsp;&nbsp;
+        <%-- Visible="false" on below 2 fields--%>
+        <asp:Label ID="TracksBy" runat="server" ></asp:Label>&nbsp;&nbsp; 
         <asp:Label ID="SearchArg" runat="server" ></asp:Label><br />
+
         <asp:ListView ID="TracksSelectionList" runat="server"
+
             DataSourceID="TrackSelectionListODS"
+
             OnItemCommand="TracksSelectionList_ItemCommand"
              >
+
             <AlternatingItemTemplate>
                 <tr style="background-color: #FFFFFF; color: #284775;">
                     <td>

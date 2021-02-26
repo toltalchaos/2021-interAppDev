@@ -24,8 +24,21 @@ namespace WebApp.SamplePages
 
         protected void ArtistFetch_Click(object sender, EventArgs e)
         {
-            
-                //code to go here
+
+            // click on fetch by artist logic 
+            // bind information to the hidden labels
+            TracksBy.Text = "Artist";
+            if (string.IsNullOrEmpty(ArtistName.Text)) // .Value if using HiddenField
+            {
+                MessageUserControl.ShowInfo("oopsies","input some damn data in the Artist search Field!");
+            }
+            else
+            {
+                SearchArg.Text = ArtistName.Text;
+            }
+            //to force exicution to ODS attached to a control - re-bind the Display control
+
+            TracksSelectionList.DataBind();
 
           }
 
