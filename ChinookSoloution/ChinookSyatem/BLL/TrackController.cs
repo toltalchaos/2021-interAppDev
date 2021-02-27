@@ -52,27 +52,97 @@ namespace ChinookSystem.BLL
         {
             using (var context = new ChinookSystemContext())
             {
-                List<TrackList> results = (from x in context.Tracks
-                                          where x.Album.Artist.Name.Contains(arg)
-                                          select new TrackList
-                                          {
-                                              TrackID = x.TrackId,
-                                              Name = x.Name,
-                                              Title = x.Album.Title,
-                                              ArtistName = x.Album.Artist.Name,
-                                              GenreName = x.Genre.Name,
-                                              Composer = x.Composer,
-                                              Milliseconds = x.Milliseconds,
-                                              Bytes = x.Bytes,
-                                              UnitPrice = x.UnitPrice
+                List<TrackList> results = null;
+                if (tracksby.Equals("Artist"))
+                {
+                     results = (from x in context.Tracks
+                                               where x.Album.Artist.Name.Contains(arg)
+                                               select new TrackList
+                                               {
+                                                   TrackID = x.TrackId,
+                                                   Name = x.Name,
+                                                   Title = x.Album.Title,
+                                                   ArtistName = x.Album.Artist.Name,
+                                                   GenreName = x.Genre.Name,
+                                                   Composer = x.Composer,
+                                                   Milliseconds = x.Milliseconds,
+                                                   Bytes = x.Bytes,
+                                                   UnitPrice = x.UnitPrice
 
-                                          }).ToList();
+                                               }).ToList();
 
 
+                    
+
+                }
+                else if (tracksby.Equals("Album"))
+                {
+                     results = (from x in context.Tracks
+                                               where x.Album.Title.Contains(arg)
+                                               select new TrackList
+                                               {
+                                                   TrackID = x.TrackId,
+                                                   Name = x.Name,
+                                                   Title = x.Album.Title,
+                                                   ArtistName = x.Album.Artist.Name,
+                                                   GenreName = x.Genre.Name,
+                                                   Composer = x.Composer,
+                                                   Milliseconds = x.Milliseconds,
+                                                   Bytes = x.Bytes,
+                                                   UnitPrice = x.UnitPrice
+
+                                               }).ToList();
+
+
+                    
+                }
+                else
+                {
+                    //big oopsies oh no error or genre method call
+                    results = List_GenreTracksPlaylistSelection(tracksby, arg);
+                }
                 return results;
+
             }
         }//eom
 
-       
+
+        private List<TrackList> List_GenreTracksPlaylistSelection(string tracksby, string arg)
+        {
+            int genreid;
+            if(!Int32.TryParse(arg, out genreid))
+            {
+                throw new Exception("big oops on the genre thing");
+            }
+            
+            using (var context = new ChinookSystemContext())
+            {
+                List<TrackList> results = null;
+                results = (from x in context.Tracks
+                          where x.GenreId == genreid
+                           select new TrackList
+                           {
+                               TrackID = x.TrackId,
+                               Name = x.Name,
+                               Title = x.Album.Title,
+                               ArtistName = x.Album.Artist.Name,
+                               GenreName = x.Genre.Name,
+                               Composer = x.Composer,
+                               Milliseconds = x.Milliseconds,
+                               Bytes = x.Bytes,
+                               UnitPrice = x.UnitPrice
+
+                           }).ToList();
+
+                return results;
+
+            }
+
+
+
+        }
+
+
+
     }//eoc
 }

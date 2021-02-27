@@ -46,14 +46,40 @@ namespace WebApp.SamplePages
         protected void GenreFetch_Click(object sender, EventArgs e)
         {
 
-                //code to go here
+            // click on fetch by artist logic 
+            // bind information to the hidden labels
+            TracksBy.Text = GenreDDL.Text;
+            if (string.IsNullOrEmpty(GenreDDL.SelectedValue)) // .Value if using HiddenField
+            {
+                MessageUserControl.ShowInfo("oopsies", "input some damn data in the Genre search Field!");
+            }
+            else
+            {
+                SearchArg.Text = GenreDDL.SelectedValue;
+            }
+            //to force exicution to ODS attached to a control - re-bind the Display control
+
+            TracksSelectionList.DataBind();
 
         }
 
         protected void AlbumFetch_Click(object sender, EventArgs e)
         {
 
-                //code to go here
+            // click on fetch by artist logic 
+            // bind information to the hidden labels
+            TracksBy.Text = "Album";
+            if (string.IsNullOrEmpty(AlbumTitle.Text)) // .Value if using HiddenField
+            {
+                MessageUserControl.ShowInfo("oopsies", "input some damn data in the Album search Field!");
+            }
+            else
+            {
+                SearchArg.Text = AlbumTitle.Text;
+            }
+            //to force exicution to ODS attached to a control - re-bind the Display control
+
+            TracksSelectionList.DataBind();
 
         }
 
