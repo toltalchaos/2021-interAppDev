@@ -52,20 +52,17 @@
         <asp:Label ID="SearchArg" runat="server" ></asp:Label><br />
 
         <asp:ListView ID="TracksSelectionList" runat="server"
-
             DataSourceID="TrackSelectionListODS"
-
-            OnItemCommand="TracksSelectionList_ItemCommand"
-             >
+            OnItemCommand="TracksSelectionList_ItemCommand">
 
             <AlternatingItemTemplate>
                 <tr style="background-color: #FFFFFF; color: #284775;">
                     <td>
                         <asp:LinkButton ID="AddtoPlaylist" runat="server"
-                             CssClass="btn" CommandArgument='<%# Eval("TrackID") %>'>
-                            <span aria-hidden="true" class="glyphicon glyphicon-plus">&nbsp;</span>
+                            CssClass="btn" CommandArgument='<%# Eval("TrackID") %>'>
+                           + 
                         </asp:LinkButton>
-                        </td>
+                    </td>
                     <td>
                         <asp:Label Text='<%# Eval("Name") %>' runat="server" ID="NameLabel" /></td>
                     <td>
@@ -79,13 +76,13 @@
                     <td>
                         <asp:Label Text='<%# Eval("Milliseconds") %>' runat="server" ID="MillisecondsLabel" /></td>
                     <td>
-                        <asp:Label Text='<%# string.Format("{0:0.00}",(int)Eval("Bytes") / 1000000m) %>' 
+                        <asp:Label Text='<%# string.Format("{0:0.00}",(int)Eval("Bytes") / 1000000m) %>'
                             runat="server" ID="BytesLabel" /></td>
                     <td>
                         <asp:Label Text='<%# Eval("UnitPrice") %>' runat="server" ID="UnitPriceLabel" /></td>
                 </tr>
             </AlternatingItemTemplate>
-           
+
             <EmptyDataTemplate>
                 <table runat="server" style="background-color: #FFFFFF; border-collapse: collapse; border-color: #999999; border-style: none; border-width: 1px;">
                     <tr>
@@ -93,16 +90,16 @@
                     </tr>
                 </table>
             </EmptyDataTemplate>
-             <ItemTemplate>
+            <ItemTemplate>
                 <tr style="background-color: #E0FFFF; color: #333333;">
                     <td>
-                       <asp:LinkButton ID="AddtoPlaylist" runat="server"
-                             CssClass="btn" CommandArgument='<%# Eval("TrackID") %>'>
-                            <span aria-hidden="true" class="glyphicon glyphicon-plus">&nbsp;</span>
+                        <asp:LinkButton ID="AddtoPlaylist" runat="server"
+                            CssClass="btn" CommandArgument='<%# Eval("TrackID") %>'>
+                            +
                         </asp:LinkButton>
                     </td>
                     <td>
-                        
+
                         <asp:Label Text='<%# Eval("Name") %>' runat="server" ID="NameLabel" /></td>
                     <td>
                         <asp:Label Text='<%# Eval("Title") %>' runat="server" ID="TitleLabel" /></td>
@@ -157,6 +154,8 @@
         </asp:ListView>
 
         <br /><br />
+        <%-- playlist fetch area --%>
+
         <asp:Label ID="Label6" runat="server" Text="Playlist Name:"></asp:Label>
         <asp:TextBox ID="PlaylistName" runat="server"></asp:TextBox>
         <asp:Button ID="PlayListFetch" runat="server" Text="Fetch" OnClick="PlayListFetch_Click" 
@@ -165,7 +164,7 @@
         <%--enter 3 linkbuttons for move up, move down and delete --%>
         <asp:LinkButton ID="MoveUp" runat="server"
                 CssClass="btn" OnClick="MoveUp_Click"  >
-           ^ <i class="fa fa-chevron-up" style="color:blue; font-size:2em;"></i>&nbsp;
+           /\ <i class="fa fa-chevron-up" style="color:blue; font-size:2em;"></i>&nbsp;
         </asp:LinkButton>&nbsp;&nbsp;
         <asp:LinkButton ID="MoveDown" runat="server"
                 CssClass="btn" OnClick="MoveDown_Click" >
@@ -176,6 +175,9 @@
             X <i class="fa fa-times" style="color:red; font-size:2em;"></i>&nbsp;
         </asp:LinkButton>
         <br /><br />
+
+        <%-- grid view populated by a list in code behind by itterating through list view --%>
+
         <asp:GridView ID="PlayList" runat="server" AutoGenerateColumns="False"
              Caption="PlayList" GridLines="Horizontal" BorderStyle="None">
             <Columns>

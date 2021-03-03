@@ -85,19 +85,45 @@ namespace WebApp.SamplePages
 
         protected void PlayListFetch_Click(object sender, EventArgs e)
         {
-            //code to go here
+            //temporarily hardcoding username 
+            //until security is implamented
+
+            string username = "HansenB";
+
+            if (string.IsNullOrEmpty(PlaylistName.Text))
+            {
+
+                MessageUserControl.ShowInfo("Playlist Search", "No playlist name provided");
+            }
+            else
+            {
+                //user friendly error handling
+                MessageUserControl.TryRun(() => {
+
+                    PlaylistTracksController sysmgr = new PlaylistTracksController();
+
+                    List<UserPlaylistTrack> info = sysmgr.List_TracksForPlaylist(PlaylistName.Text, username);
+
+                    PlayList.DataSource = info;
+                    PlayList.DataBind();
+
+
+                }, "WEEEEE playlist", "that list looks great!"); //success message (optional)
+
+            }
+
  
         }
 
         protected void MoveDown_Click(object sender, EventArgs e)
         {
-            //code to go here
+            
  
         }
 
         protected void MoveUp_Click(object sender, EventArgs e)
         {
-            //code to go here
+            
  
         }
 
