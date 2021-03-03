@@ -17,7 +17,7 @@ namespace WebApp.SamplePages
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            TracksSelectionList.DataSource = null;
+            TracksSelectionList.DataSource = null; //throws error but who cares
         }
 
         
