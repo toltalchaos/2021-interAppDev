@@ -102,10 +102,9 @@ namespace WebApp.SamplePages
 
                     PlaylistTracksController sysmgr = new PlaylistTracksController();
 
-                    List<UserPlaylistTrack> info = sysmgr.List_TracksForPlaylist(PlaylistName.Text, username);
 
-                    PlayList.DataSource = info;
-                    PlayList.DataBind();
+                    //rebind playlist
+                    RefreshPlaylist(sysmgr, username);
 
 
                 }, "WEEEEE playlist", "that list looks great!"); //success message (optional)
@@ -114,6 +113,18 @@ namespace WebApp.SamplePages
 
  
         }
+
+        protected void RefreshPlaylist(PlaylistTracksController sysmgr, string username)
+        {
+            sysmgr = new PlaylistTracksController();
+
+            List<UserPlaylistTrack> info = sysmgr.List_TracksForPlaylist(PlaylistName.Text, username);
+
+            PlayList.DataSource = info;
+            PlayList.DataBind();
+
+        }
+
 
         protected void MoveDown_Click(object sender, EventArgs e)
         {
@@ -142,9 +153,41 @@ namespace WebApp.SamplePages
 
         protected void TracksSelectionList_ItemCommand(object sender, 
             ListViewCommandEventArgs e)
-        {
-            //code to go here
-            
+        {//event on listview - command arg**
+            string username = "HansenB"; //until security
+
+            //form event validation - presence
+            if (string.IsNullOrEmpty(PlaylistName.Text))
+            {
+                MessageUserControl.ShowInfo("missing data", "enter a playlist name to playlist name field");
+            }
+            else
+            {
+                //playlist exists and arg has happened
+                //REMINDER  - Message usercontrol will do error throws
+
+                MessageUserControl.TryRun(() => {
+                    //logic for the code block 
+                    PlaylistTracksController sysmgr = new PlaylistTracksController();
+                    // e argument coming from button object in list ... parse e object to string then to int
+
+                    //access a specific field on selected listview row
+                    string song = (e.Item.FindControl("NameLabel") as Label).Text;
+
+                    sysmgr.Add_TrackToPLaylist(PlaylistName.Text, username, int.Parse(e.CommandArgument.ToString()), song);
+
+
+                    //rebind playlist
+                    RefreshPlaylist(sysmgr, username);
+
+
+
+                }, "great success", "added track to playlist");
+
+
+            }
+
+
         }
         #region Message user Controll Error Handling For ODS
         protected void SelectCheckForException(object sender, ObjectDataSourceStatusEventArgs args)
