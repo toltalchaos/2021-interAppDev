@@ -148,7 +148,64 @@ namespace WebApp.SamplePages
         protected void DeleteTrack_Click(object sender, EventArgs e)
         {
             //code to go here
- 
+            string username = "HansenB"; //until security
+
+            //form event validation - presence
+            if (string.IsNullOrEmpty(PlaylistName.Text))
+            {
+                MessageUserControl.ShowInfo("missing data", "enter a playlist name to playlist name field");
+            }
+            else
+            {
+                if (PlayList.Rows.Count == 0)
+                {
+                    MessageUserControl.ShowInfo("track removal", "no rows to select from");
+                }
+                else
+                {
+                    //collect the selected tracks 
+                    List<int> trackids = new List<int>();
+                    int rowselected = 0;
+                    CheckBox trackSelection = null;
+
+                    //traverse the gridview controll playlist
+                    //could use FOREACH here
+                    for (int i = 0; i < PlayList.Rows.Count; i++)
+                    {
+                        //point to the checkbox control on the gridview row
+                        trackSelection = PlayList.Rows[i].FindControl("Selected") as CheckBox;
+
+                        //Test the setting of the Checkbox
+                        if (trackSelection.Checked)
+                        {
+                            rowselected++;
+                            trackids.Add(int.Parse((PlayList.Rows[i].FindControl("TrackId") as Label).Text));
+                        }
+                        
+                    }
+                    //was a song selected?
+                    if (rowselected == 0)
+                    {
+                        MessageUserControl.ShowInfo("missing data", "no selected tracks");
+                    }
+                    else
+                    {
+                        //data collected - send for processing 
+                        MessageUserControl.TryRun(() =>
+                        {
+                            PlaylistTracksController sysmgr = new PlaylistTracksController();
+
+                            sysmgr.DeleteTracks(username, PlaylistName.Text, trackids);
+
+                            RefreshPlaylist( sysmgr, username);
+
+
+                        },"track removal", "great success");
+                    }
+                }
+            }
+
+
         }
 
         protected void TracksSelectionList_ItemCommand(object sender, 

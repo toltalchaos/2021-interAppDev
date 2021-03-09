@@ -94,7 +94,7 @@ namespace ChinookSystem.BLL
                               UserName = username,
 
                         };
-                        context.Playlists.Add(playlistExist);
+                        context.Playlists.Add(playlistExist); //staged in memory
                         tracknumber = 1;
 
                         
@@ -107,15 +107,67 @@ namespace ChinookSystem.BLL
                         // what is the last track number?
                         // insert track ++tracknumber
 
+                        playlistTrackExist = (from x in context.PlaylistTracks
+                                              where x.Playlist.Name == playlistname && x.Playlist.UserName == username && x.TrackId == trackid
+                                              select x).FirstOrDefault(); //look for track
+                        if (playlistTrackExist == null)
+                        {
+                            //track does not exist on desired playlist
+                            //find highest track number and incriment 
+                            tracknumber = (from x in context.PlaylistTracks
+                                           where x.Playlist.Name == playlistname && x.Playlist.UserName == username
+                                           select x.TrackNumber).Max();
+                            tracknumber++;
+
+                            //add track to playlist 
+
+                        }
+                        else
+                        {
+                            //business rule broken. track DOES exist on playlist.
+                            brokenrules.Add(new BusinessRuleException<string>("Track already on playlist",
+                                                                        nameof(song), song)); // showing the data causing error
+                        }
+                        
+
 
 
                     }
+                           //create instance 
+                        playlistTrackExist = new PlaylistTrack();
+                        //load instance
+                        playlistTrackExist.TrackId = trackid;
+                        playlistTrackExist.TrackNumber = tracknumber;
+                    //SQL CREATING PK 
+                    //where new record is ONLY staged there is no PK value.
+                    // if you access the new playlist record the PK would default of 0 <--- bad
 
+                    //stage parent with track item
+                    //entity framework will ensure that the adding of records to the database will be done in 
+                    // the appropriate order and will add the missing compound PK value (playlistId) to the new playlist track record
+
+
+                    //add instance
+                    //THIS IS CORRECT, USING NAVIGATIONAL PROPERTIES to stage
+                    playlistExist.PlaylistTracks.Add(playlistTrackExist);
+                    
+                        
 
                 }
-                else // broken rules exist
-                {
 
+                //check again for errors up to this point
+                if (brokenrules.Count() == 0)
+                {
+                    //do the commit
+                    //all the staged records will be sent to SQL for processing 
+                    context.SaveChanges();
+                    //note COMPLETED transaction - 1 and only 1 .savechanges() 
+
+                }
+                // broken rules exist
+                else 
+                {
+                    throw new BusinessRuleCollectionException("Adding playlist Track concerns", brokenrules); //title and exception list
                 }
                 
 

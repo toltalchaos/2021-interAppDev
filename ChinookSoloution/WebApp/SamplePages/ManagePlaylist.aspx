@@ -100,7 +100,7 @@
                 <tr style="background-color: #E0FFFF; color: #333333;">
                     <td>
                         <asp:LinkButton ID="AddtoPlaylist" runat="server"
-                            CssClass="btn" CommandArgument='<%# Eval("TrackID") %>'>
+                            CssClass="btn btn-primary" CommandArgument='<%# Eval("TrackID") %>'>
                             +
                         </asp:LinkButton>
                     </td>
