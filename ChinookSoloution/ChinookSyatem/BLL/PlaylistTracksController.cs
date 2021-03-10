@@ -116,7 +116,7 @@ namespace ChinookSystem.BLL
                             //find highest track number and incriment 
                             tracknumber = (from x in context.PlaylistTracks
                                            where x.Playlist.Name == playlistname && x.Playlist.UserName == username
-                                           select x.TrackNumber).Max();
+                                           select x.TrackNumber).Count();
                             tracknumber++;
 
                             //add track to playlist 
@@ -176,7 +176,7 @@ namespace ChinookSystem.BLL
 
             }
         }//eom
-        public void MoveTrack(string username, string playlistname, int trackid, int tracknumber, string direction)
+        public void MoveTrack(MoveTrackItem movetrack)
         {
             using (var context = new ChinookSystemContext())
             {
@@ -234,7 +234,7 @@ namespace ChinookSystem.BLL
                                      where x.Playlist.Name == playlistname && x.Playlist.UserName == username && !trackstodelete.Any(tod => tod == x.TrackId)
                                      orderby x.TrackNumber
                                      select x;
-                    //remove the desired tracks
+                    //remove the desired track refrences
                     PlaylistTrack item = null;
 
                     foreach(var deleterecord in trackstodelete)
@@ -255,7 +255,27 @@ namespace ChinookSystem.BLL
 
                     }
                     //resequence the kept tracks
+                    // option - use a list and update the records of the list 
+                    //option - delete all children records and re-add only the new kept records list
 
+                    tracknumber = 1;
+                    foreach(var track in trackskept)
+                    {
+                        track.TrackNumber = tracknumber;
+                        //stage
+                        context.Entry(track).Property(nameof(PlaylistTrack.TrackNumber)).IsModified = true;
+
+                        tracknumber++;
+                    }
+                    //commit
+                    if(brokenrules.Count > 0)
+                    {
+                        throw new BusinessRuleCollectionException("Track removal concerns", brokenrules);
+                    }
+                    else
+                    {
+                        context.SaveChanges();
+                    }
 
 
                 }
