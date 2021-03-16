@@ -14,7 +14,7 @@
     <webopt:bundlereference runat="server" path="~/Content/css" />
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <%-- font awesome link should go here --%>
-    
+    <link href="Content/myTabStyles.css" rel="stylesheet" />
     
 
 </head>
@@ -92,6 +92,11 @@
                                         href="~/SamplePages/ManagePlaylist.aspx"
                                         style="color:black" runat="server">
                                    Manage Playlist
+                                 </a>
+                                 <a class="dropdown-item"
+                                        href="~/SamplePages/MultiView.aspx"
+                                        style="color:black" runat="server">
+                                  multi view
                                  </a>
                             </div>
                          </li>

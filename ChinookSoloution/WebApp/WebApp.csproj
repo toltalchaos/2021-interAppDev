@@ -190,6 +190,7 @@
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\myTabStyles.css" />
     <Content Include="Content\Site.css" />
     <Content Include="css\font-awesome.css" />
     <Content Include="css\font-awesome.min.css" />
@@ -201,6 +202,7 @@
     <Content Include="SamplePages\ArtistAlbums.aspx" />
     <Content Include="SamplePages\ListViewODSCRUD.aspx" />
     <Content Include="SamplePages\ManagePlaylist.aspx" />
+    <Content Include="SamplePages\MultiView.aspx" />
     <Content Include="SamplePages\ODSrepreater.aspx" />
     <Content Include="SamplePages\SearchByDLL.aspx" />
     <Content Include="SamplePages\TestPage.aspx" />
@@ -504,6 +506,13 @@
     </Compile>
     <Compile Include="SamplePages\ManagePlaylist.aspx.designer.cs">
       <DependentUpon>ManagePlaylist.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SamplePages\MultiView.aspx.cs">
+      <DependentUpon>MultiView.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SamplePages\MultiView.aspx.designer.cs">
+      <DependentUpon>MultiView.aspx</DependentUpon>
     </Compile>
     <Compile Include="SamplePages\ODSrepreater.aspx.cs">
       <DependentUpon>ODSrepreater.aspx</DependentUpon>
