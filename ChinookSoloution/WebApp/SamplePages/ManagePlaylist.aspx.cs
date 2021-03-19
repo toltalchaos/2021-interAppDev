@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -8,6 +9,7 @@ using System.Web.UI.WebControls;
 #region Additonal Namespaces
 using ChinookSystem.BLL;
 using ChinookSystem.ViewModels;
+using WebApp.security;
 
 #endregion
 
@@ -18,6 +20,40 @@ namespace WebApp.SamplePages
         protected void Page_Load(object sender, EventArgs e)
         {
             TracksSelectionList.DataSource = null; //throws error but who cares
+
+            //security for forms security
+            //check to see if the user is logged on 
+            if (Request.IsAuthenticated)
+            {
+                //user is logged in
+                //Do you have the authority to be here?
+                if (User.IsInRole(ConfigurationManager.AppSettings["customerRole"])) //same same because of web.config|| User.IsInRole("Customers")
+                {
+                    //authorized user
+                    //obtain customer ID on the security user record
+                    SecurityController ssysmgr = new SecurityController();
+                    //pass the value of the userName to the method GetCurrentCustomerId
+                    //returned is the customer ID as (int?)
+                    int? customerId = ssysmgr.GetCurrentUserCustomerId(User.Identity.Name);
+                    //need to convert the nullable int to a normal int for lookup to the CustomerController in my BLL
+                    //int custID = customerId != null ? int.Parse(customerId.ToString()) : default(int);
+                    int custID = customerId ?? default(int);
+
+                    //use the custID to do the standard Customer Record lookup
+
+
+                    LoggedUser.Text = User.Identity.Name;
+                }
+                else
+                {
+                    //not authorized
+                    Response.Redirect("~/SamplePages/DeniedAccess.aspx");
+                }
+            }
+            else
+            {
+                Response.Redirect("~/Account/Login.aspx");
+            }
         }
 
         
@@ -88,7 +124,7 @@ namespace WebApp.SamplePages
             //temporarily hardcoding username 
             //until security is implamented
 
-            string username = "HansenB";
+            string username = User.Identity.Name;
 
             if (string.IsNullOrEmpty(PlaylistName.Text))
             {
